@@ -41,7 +41,12 @@ function CreateProductPage() {
                 body: JSON.stringify(formData)
             });
             
-            if (!response.ok) throw new Error('Error al crear el producto');
+            if (!response.ok) {
+                // Si no lo fue, leemos el JSON del error que envió el backend
+                const errorData = await response.json();
+                // Mostramos el mensaje específico del backend (ej: "Límite alcanzado")
+                throw new Error(errorData.message || 'Error al crear el producto');
+            }
             
             const newProduct = await response.json();
             alert('¡Producto creado exitosamente!');
