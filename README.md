@@ -9,6 +9,7 @@ Se implementó una API CRUD completa con Express y MongoDB y se refactorizó el 
 * **Frontend (React en Vercel):** `https://ecommerce-hermanos-jota-mern.vercel.app`
 * **Backend (API en Render):** `https://ecommerce-hermanos-jota-api.onrender.com/api/productos`
 
+#
 ---
 
 ## 📋 Funcionalidades Implementadas
@@ -23,22 +24,30 @@ Se implementó una API CRUD completa con Express y MongoDB y se refactorizó el 
     * `POST /api/productos` (Crear uno)
     * `PUT /api/productos/:id` (Actualizar uno)
     * `DELETE /api/productos/:id` (Eliminar uno)
+* **Límite de seguridad** en la ruta `POST` (máx. 11 productos) para proteger la base de datos de la entrega.
 
 ### Frontend (React)
 * Integración de **React Router DOM** para la navegación.
+* Archivo `vercel.json` para manejar correctamente las recargas en rutas de SPA.
+* Página de Inicio (`/`) con *Hero Banner* y productos destacados.
 * Página de Catálogo (`/productos`) que consume la API (`GET`).
-* Página de Inicio (`/`) que muestra solo productos destacados.
-* Página de Detalle Dinámica (`/productos/:id`) que usa `useParams` para `fetch` de un solo producto.
+* Página de Detalle Dinámica (`/productos/:id`) que usa `useParams`.
 * Formulario de Creación de Producto (`/admin/crear-producto`) que hace `POST` a la API.
 * Funcionalidad de "Eliminar" en la página de detalle que hace `DELETE` a la API.
-* Uso de `useNavigate` para redirección programática después de crear o eliminar.
+* **Manejo de errores** específico de la API en los formularios.
+* Componente `Loader` (spinner) para los estados de carga.
+* Menú de navegación móvil que se cierra automáticamente al seleccionar una opción.
 
+#
 ---
 
 ## 🛠️ Cómo ejecutar localmente
 
-### 1. Backend
+Puedes ejecutar el proyecto de dos maneras:
 
+### 1. Con NPM (Estándar)
+
+**Backend:**
 ```bash
 # Desde la raíz del proyecto
 cd backend
@@ -49,8 +58,8 @@ npm install
 
 npm start
 ```
-### 2. Frontend
 
+**Frontend (en otra terminal):**
 ```bash
 # Desde la raíz del proyecto
 cd client
@@ -61,3 +70,41 @@ npm install
 
 npm run dev
 ```
+
+### 2. Con Docker (Híbrido: Backend en Docker)
+Este método corre el backend dentro de un contenedor, asegurando un entorno consistente.
+
+**Backend (con Docker):**
+
+```bash
+# Desde la raíz del proyecto
+# 1. Asegúrate de tener tu archivo /backend/.env creado como en el método 1
+# 2. Inicia docker-compose
+docker-compose up --build
+```
+
+**Frontend (en otra terminal):**
+
+```bash
+# Desde la raíz del proyecto
+cd client
+npm install
+
+# 1. Asegúrate de tener tu archivo /client/.env creado como en el método 1
+# 2. Inicia el cliente
+npm run dev
+```
+---
+
+## 🧪 Datos de Prueba para Creación
+
+Puedes usar la ruta `/admin/crear-producto` para añadir un nuevo ítem. Aquí tienes un ejemplo de los datos del `products.json` que puedes usar para poblar un campo:
+
+* **Nombre del Producto:** `Escritorio Costa`
+* **Precio (número):** `58000`
+* **Ruta de Imagen (ej: images/Silla.png):** `images/Escritorio Costa.png`
+* **Descripción:** `Escritorio compacto con cajón organizado y tapa pasacables integrada en bambú laminado. Ideal para espacios de trabajo en casa.`
+* **Medidas:** `120 × 60 × 75 cm`
+* **Materiales:** `Bambú laminado, herrajes ocultos`
+* **Acabado:** `(Dejar vacío o poner N/A)`
+* **Peso:** `(Dejar vacío o poner N/A)`
