@@ -1,11 +1,15 @@
 
-function ProductDetail({ product, onAddToCart, onBack }) {
+// 1. Recibe 'onDelete' y ya NO recibe 'onBack'
+function ProductDetail({ product, onAddToCart, onDelete }) {
+  
+  const imageUrl = product.image.startsWith('http') ? product.image : `/${product.image}`;
+
   return (
     <div className="product-detail-container container">
       <div className="product-detail-layout">
         
         <div className="product-image-gallery">
-          <img src={`/${product.image}`} alt={product.name} />
+          <img src={imageUrl} alt={product.name} />
         </div>
 
         <div className="product-info">
@@ -18,7 +22,7 @@ function ProductDetail({ product, onAddToCart, onBack }) {
           <div className="product-specs">
             <h3>Especificaciones</h3>
             <ul>
-              {/* Iteramos sobre las especificaciones del producto para mostrarlas */}
+              {/* Iteramos sobre las especificaciones del producto */}
               {Object.entries(product.specs).map(([key, value]) => (
                 <li key={key}>
                   <strong>{key}:</strong>
@@ -32,8 +36,15 @@ function ProductDetail({ product, onAddToCart, onBack }) {
             Añadir al Carrito
           </button>
           
-          <button className="btn" onClick={onBack} style={{marginTop: '1rem', width: '100%'}}>
-            &larr; Volver al Catálogo
+          {/* 2. Botón "Volver" eliminado */}
+
+          {/* 3. nuevo Botón de Eliminar */}
+          <button 
+            className="btn" 
+            onClick={onDelete} 
+            style={{marginTop: '1rem', width: '100%', backgroundColor: '#a94442', color: 'white'}}
+          >
+            Eliminar Producto (Admin)
           </button>
         </div>
 

@@ -1,4 +1,6 @@
+
 import { useState } from 'react';
+import { Link } from 'react-router-dom'; // 1. Importar Link
 
 function Navbar({ cartItemCount }) {
   const [isNavActive, setIsNavActive] = useState(false);
@@ -6,25 +8,27 @@ function Navbar({ cartItemCount }) {
   return (
     <header className="main-header">
       <div className="header-container">
-        <a href="/" className="header-logo">
+        {/* 2. El logo ahora es un Link a la página de inicio */}
+        <Link to="/" className="header-logo">
           <img src="/images/logo.svg" alt="Logo Hermanos Jota" /> 
           <span>Hermanos Jota</span>
-        </a>
+        </Link>
 
         <button 
           className="menu-toggle" 
           id="menu-toggle" 
           aria-label="Abrir menú"
-          onClick={() => setIsNavActive(!isNavActive)} // Lógica para el menú móvil
+          onClick={() => setIsNavActive(!isNavActive)}
         >
           <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" height="24px" width="24px" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
         </button>
 
         <nav className={`main-nav ${isNavActive ? 'is-active' : ''}`} id="main-nav">
           <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Productos</a></li>
-            <li><a href="#">Contacto</a></li>
+            {/* 3. Reemplazamos <a> por <Link> y 'href' por 'to' */}
+            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="/productos">Productos</Link></li>
+            <li><Link to="/contacto">Contacto</Link></li>
           </ul>
         </nav>
         
