@@ -36,20 +36,33 @@ router.get('/:id', async (req, res) => {
 
 // 3. POST /api/productos (Crear UNO)
 router.post('/', async (req, res) => {
-    // Los datos del nuevo producto vienen en el body (req.body)
-    const product = new Product({
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        image: req.body.image,
-        specs: req.body.specs
-    });
 
     try {
+        // --- INICIO DE LA SOLUCIÓN DE LÍMITE ---
+        const productCount = await Product.countDocuments();
+        
+        // El límite.
+        if (productCount >= 11) {
+            return res.status(403).json({ 
+                message: "Límite de productos alcanzado. No se pueden agregar más." 
+            });
+        }
+        // --- FIN DE LA SOLUCIÓN DE LÍMITE ---
+
+        // Los datos del nuevo producto vienen en el body (req.body)
+        const product = new Product({
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            image: req.body.image,
+            specs: req.body.specs
+        });
+
         const newProduct = await product.save();
         res.status(201).json(newProduct); // 201 = Creado exitosamente
+
     } catch (err) {
-        // Esto pasará si falta un campo 'required' (ej: 'name')
+        // Esto atrapará errores tanto del 'countDocuments' como del 'save'
         res.status(400).json({ message: "Error al crear el producto: " + err.message });
     }
 });
