@@ -68,4 +68,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// @desc    Cerrar sesión (logout) y limpiar cookie
+// @route   POST /api/users/logout
+// @access  Public (o Privado, pero POST es simple)
+router.post('/logout', (req, res) => {
+    // La cookie se llama 'jwt' (como en generateToken.js)
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0) // Expira la cookie inmediatamente
+    });
+    res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+});
+
 export default router;

@@ -40,12 +40,20 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('userInfo', JSON.stringify(userData));
     };
 
-    const logout = () => {
-        // Esta función será llamada por el botón de Logout en el Navbar
+    const logout = async () => {
+        try {
+            // 1. Llamamos a la API de logout del backend
+            await fetch(`${import.meta.env.VITE_API_URL}/api/users/logout`, {
+                method: 'POST'
+            });
+        } catch (error) {
+            console.error("Error al hacer logout en el backend:", error);
+        }
+
+        // 2. Limpiamos el estado local y el localStorage
         setUserInfo(null);
         setIsAuthenticated(false);
         localStorage.removeItem('userInfo');
-        // También limpiaremos la cookie de JWT (aunque lo haremos en el backend)
     };
 
     // 5. Exponemos el estado y las funciones a través del "Provider"
