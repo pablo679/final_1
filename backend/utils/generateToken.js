@@ -5,6 +5,7 @@ const generateToken = (res, userId) => {
 
     // Creamos el token (firmado con nuestro secreto)
     const JWT_SECRET = process.env.JWT_SECRET;
+
     if (!JWT_SECRET) {
         console.error('Error: JWT_SECRET no está definido. Revisa tu archivo .env');
         throw new Error('Error de servidor: Configuración de token inválida');
@@ -18,7 +19,7 @@ const generateToken = (res, userId) => {
     res.cookie('jwt', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== 'development', // Usar https en producción
-        sameSite: 'strict', // Previene ataques CSRF
+        sameSite: 'none', // CAMBIO: de 'strict' a 'none' para permitir cross-domain
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 días en milisegundos
     });
 };
