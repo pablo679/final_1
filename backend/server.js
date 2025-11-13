@@ -1,14 +1,16 @@
 
 // 1. Cambiamos 'require' por 'import'
+import dotenv from 'dotenv';
+
+dotenv.config();// 2. Configuramos dotenv
+
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import productRoutes from './routes/productRoutes.js';
-import userRoutes from './routes/userRoutes.js'; // 2. Importamos las nuevas rutas de usuario
+import userRoutes from './routes/userRoutes.js'; // 3. Importamos las nuevas rutas de usuario
 
-// 3. Configuramos dotenv
-dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;

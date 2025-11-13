@@ -1,10 +1,14 @@
 
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 const generateToken = (res, userId) => {
+
     // Creamos el token (firmado con nuestro secreto)
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!JWT_SECRET) {
+        console.error('Error: JWT_SECRET no está definido. Revisa tu archivo .env');
+        throw new Error('Error de servidor: Configuración de token inválida');
+    }
     const token = jwt.sign({ userId }, JWT_SECRET, {
         expiresIn: '30d' // Expira en 30 días
     });
