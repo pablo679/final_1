@@ -2,7 +2,7 @@
 import { useCart } from '../context/CartContext.jsx';
 
 // 1. Recibe 'onDelete' y ya NO recibe 'onBack'
-function ProductDetail({ product, onDelete }) {
+function ProductDetail({ product, onDelete, isAdmin }) {
   
   const { addToCart } = useCart();
   const imageUrl = product.image.startsWith('http') ? product.image : `/${product.image}`;
@@ -39,16 +39,17 @@ function ProductDetail({ product, onDelete }) {
             Añadir al Carrito
           </button>
           
-          {/* 2. Botón "Volver" eliminado */}
+          {/* Muestra este botón SÓLO si 'isAdmin' es true */}
+          {isAdmin && (
+            <button 
+              className="btn" 
+              onClick={onDelete} 
+              style={{marginTop: '1rem', width: '100%', backgroundColor: '#a94442', color: 'white'}}
+            >
+              Eliminar Producto (Admin)
+            </button>
+          )}
 
-          {/* 3. nuevo Botón de Eliminar */}
-          <button 
-            className="btn" 
-            onClick={onDelete} 
-            style={{marginTop: '1rem', width: '100%', backgroundColor: '#a94442', color: 'white'}}
-          >
-            Eliminar Producto (Admin)
-          </button>
         </div>
 
       </div>

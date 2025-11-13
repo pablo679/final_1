@@ -31,6 +31,7 @@ function CartPage() {
                     // (lo cual es nuestro caso: Vercel y Render)
                     // Pero para localhost, necesitamos 'credentials: include'
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     orderItems: cartItems.map(item => ({
                         id: item.id,
@@ -68,7 +69,7 @@ function CartPage() {
                 </div>
 
                 {cartItems.length === 0 ? (
-                    <div style={{ textAlign: 'center' }}>
+                    <div className="cart-empty">
                         <p>Tu carrito está vacío.</p>
                         <Link to="/productos" className="btn btn-primary">Ver productos</Link>
                     </div>
@@ -81,8 +82,12 @@ function CartPage() {
                                     <div className="cart-item-info">
                                         <Link to={`/productos/${item.id}`}>{item.name}</Link>
                                         <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(item.price)} x {item.qty}</p>
+                                        <div className="cart-item-qty">
+                                            <button onClick={() => removeFromCart(item.id)} className="qty-btn">-</button>
+                                            <span>{item.qty}</span>
+                                            <button onClick={() => addToCart(item, false)} className="qty-btn">+</button>
+                                        </div>
                                     </div>
-                                    <button onClick={() => removeFromCart(item.id)} className="btn-remove">X</button>
                                 </div>
                             ))}
                         </div>

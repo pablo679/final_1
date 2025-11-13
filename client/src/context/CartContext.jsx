@@ -27,7 +27,7 @@ export const CartProvider = ({ children }) => {
 
     // 5. Definimos las funciones del carrito
 
-    const addToCart = (productToAdd) => {
+    const addToCart = (productToAdd, showNotification = true) => {
         setCartItems(prevItems => {
             // Buscamos si el producto ya existe en el carrito
             const existingItem = prevItems.find(item => item.id === productToAdd.id);
@@ -44,12 +44,29 @@ export const CartProvider = ({ children }) => {
                 return [...prevItems, { ...productToAdd, qty: 1 }];
             }
         });
-        alert(`${productToAdd.name} fue añadido al carrito.`);
+        if (showNotification) {
+            alert(`${productToAdd.name} fue añadido al carrito.`);
+        }
     };
 
     const removeFromCart = (productId) => {
         setCartItems(prevItems => {
-            return prevItems.filter(item => item.id !== productId);
+            const existingItem = prevItems.find(item => item.id === productId);
+
+            // Si el ítem no existe, no hagas nada
+            if (!existingItem) return prevItems;
+
+            if (existingItem.qty === 1) {
+                // Si solo queda 1, filtramos y lo quitamos del carrito
+                return prevItems.filter(item => item.id !== productId);
+            } else {
+                // Si hay más de 1, restamos uno a la cantidad
+                return prevItems.map(item =>
+                    item.id === productId
+                        ? { ...item, qty: item.qty - 1 }
+                        : item
+                );
+            }
         });
     };
 

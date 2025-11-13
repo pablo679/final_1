@@ -44,7 +44,8 @@ export const AuthProvider = ({ children }) => {
         try {
             // 1. Llamamos a la API de logout del backend
             await fetch(`${import.meta.env.VITE_API_URL}/api/users/logout`, {
-                method: 'POST'
+                method: 'POST',
+                credentials: 'include'
             });
         } catch (error) {
             console.error("Error al hacer logout en el backend:", error);

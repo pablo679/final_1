@@ -47,6 +47,12 @@ function Navbar() {
             <li><Link to="/" onClick={handleLinkClick}>Inicio</Link></li>
             <li><Link to="/productos" onClick={handleLinkClick}>Productos</Link></li>
             <li><Link to="/contacto" onClick={handleLinkClick}>Contacto</Link></li>
+
+            {/* --- INICIO DE UI CONDICIONAL ADMIN --- */}
+            {isAuthenticated && userInfo.isAdmin && (
+              <li><Link to="/admin/crear-producto" onClick={handleLinkClick} style={{color: 'var(--verde-salvia)'}}>Crear Producto</Link></li>
+            )}
+            {/* --- FIN DE UI CONDICIONAL ADMIN --- */}
             
             {/* --- 5. INICIO DE LA UI CONDICIONAL --- */}
             
