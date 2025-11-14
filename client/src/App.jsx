@@ -15,7 +15,7 @@ import ContactForm from './components/ContactForm'; // 2. ContactForm ahora es u
 import NotFoundPage from './pages/NotFoundPage'; // Una página para 404
 import RegisterPage from './pages/RegisterPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AdminRoute from './components/ProtectedRoute.jsx';
 import CartPage from './pages/CartPage.jsx';
 
 
@@ -52,7 +52,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} /> 
 
           {/* --- INICIO DE RUTA PROTEGIDA --- */}
-          <Route path="" element={<ProtectedRoute />}>
+          <Route path="" element={<AdminRoute />}>
               {/* Todas las rutas que pongamos aquí dentro requerirán login */}
               <Route path="/admin/crear-producto" element={<CreateProductPage />} />
               {/* Si tuviéramos más rutas de admin, irían aquí (ej: /admin/editar-producto/:id) */}

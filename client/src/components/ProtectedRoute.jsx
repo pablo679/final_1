@@ -1,16 +1,23 @@
-// /client/src/components/ProtectedRoute.jsx
+
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// Este componente actuará como un "envoltorio" para nuestras rutas
-const ProtectedRoute = () => {
-    const { isAuthenticated } = useAuth(); // Lee el estado de nuestro contexto
+// Este componente ahora protegerá las rutas de ADMIN
+const AdminRoute = () => {
+    // Leemos el estado completo de autenticación
+    const { isAuthenticated, userInfo } = useAuth();
 
-    // Si está autenticado, renderiza el componente hijo (la página)
-    // 'Outlet' es el marcador de posición para el componente que estamos protegiendo
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
-    // 'replace' evita que el usuario pueda "volver" a la página de admin con el botón de atrás
+    // 1. ¿Está logueado?
+    // 2. ¿Tiene información de usuario?
+    // 3. ¿Es admin?
+    if (isAuthenticated && userInfo && userInfo.isAdmin) {
+        return <Outlet />; // Si todo es sí, muestra la página (ej: CreateProductPage)
+    } else if (isAuthenticated) {
+        return <Navigate to="/" replace />; // Si está logueado pero NO es admin, lo mandamos al inicio
+    } else {
+        return <Navigate to="/login" replace />; // Si no está logueado, lo mandamos al login
+    }
 };
 
-export default ProtectedRoute;
+export default AdminRoute;
